@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d9693396-d54f-47c9-b9ee-5af627edf3b8"
+      }
+    },
+    "owner": "burdakovaya"
   }
 }
