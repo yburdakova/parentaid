@@ -1,54 +1,45 @@
 import {panda} from  '../assets'
-import { ChildDataProps } from './types'
+import { ChildDataTypes } from './types'
 
-export const children: ChildDataProps[] = [
+export const children: ChildDataTypes[] = [
   {
-    name:"Julia",
+    id: 1,
+    name: "Julia",
     dateBirth: "May 16th 2007",
     sex: "girl",
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
   {
-    name:"Julia",
+    id: 2,
+    name: "Maxim",
     dateBirth: "May 16th 2007",
     sex: "girl",
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
   {
-    name:"Julia",
+    id: 3,
+    name: "Alexandro",
     dateBirth: "May 16th 2007",
     sex: "girl",
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
   {
-    name:"Julia",
-    dateBirth: "May 16th 2007",
+    id: 4,
+    name: "Ig",
+    dateBirth: "03/22/24",
     sex: "girl",
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
   {
-    name:"Julia",
+    id: 5,
+    name: "Maria",
     dateBirth: "May 16th 2007",
     sex: "girl",
     avatar: panda,
     addInfo: "there is no addition informaton"
-  },
-  {
-    name:"Julia",
-    dateBirth: "May 16th 2007",
-    sex: "girl",
-    avatar: panda,
-    addInfo: "there is no addition informaton"
-  },
-  {
-    name:"Julia",
-    dateBirth: "May 16th 2007",
-    sex: "girl",
-    avatar: panda,
-    addInfo: "there is no addition informaton"
-  },
+  }
 ]

@@ -6,8 +6,13 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
 import { useColorScheme } from '@/components/useColorScheme';
-import addChildScreen from './addChildScreen';
+import { ChildDataTypes } from '@/constants/types';
 
+
+export type RootStackParamList = {
+  addChildScreen: { child: ChildDataTypes };
+  // другие экраны и их параметры
+};
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -57,8 +62,8 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name="addChildScreen" options={{ title: 'Add Child' }} 
-        />
+        <Stack.Screen name="addChildScreen" options={{ title: 'Add Child'}}
+      />
       </Stack>
     </ThemeProvider>
   );

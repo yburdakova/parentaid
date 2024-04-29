@@ -13,7 +13,7 @@ export default {
   },
   dark: {
     text: textColor,
-    background: '#000',
+    background: 'rgb(18, 18, 18)',
     tint: tintColorDark,
     tabIconDefault: tabIconGeneral,
     tabIconSelected: tintColorDark,
@@ -22,6 +22,6 @@ export default {
     text: textColor,
     border: textColor,
     blackText: "000",
-    whiteText: "fff",
+    whiteText: "fff"
   }
 };
