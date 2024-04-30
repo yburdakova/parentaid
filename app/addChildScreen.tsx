@@ -3,14 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import { ChildDataTypes } from '@/constants/types';
 import Colors from '@/constants/Colors';
-import CustomButton from '@/components/CustomButton';
 import { useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch } from 'react-redux';
 import { addChild, updateChild } from '../store/slices/childrenSlice';
-import GenderSelector from '@/components/GenderSelector';
-import GenderToggle from '@/components/GenderToggle';
-import { StyledText } from '@/components';
+import { StyledText, GenderToggle,CustomButton, AvatarSelector } from '@/components';
+import { ScreenContainer } from 'react-native-screens';
 
 
 export default function addChildScreen() {
@@ -21,15 +19,16 @@ export default function addChildScreen() {
   const route = useRoute();
 
   useEffect(() => {
-    child && setDate (new Date(child.dateBirth.slice(0, 10)))
+    child && setDate (new Date(child.dateBirth))
   },[])
 
   const { child } = route.params as { child: ChildDataTypes } ?? { child: null };
   const { change } = route.params as {change: boolean};
+
   const [name, setName] = useState(child ? child.name : '')
   const [sex, setSex] = useState <'girl' | 'boy'>(child ? child.sex : 'boy')
   const [addInfo, setAddInfo] = useState('Addinfo')
-  const [avatar, setAvatar] = useState('avatar')
+  const [avatar, setAvatar] = useState(child ? child.avatar : null)
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
   const [tempDate, setTempDate] = useState(new Date());
@@ -44,6 +43,7 @@ export default function addChildScreen() {
       avatar,
       addInfo
     };
+    console.log("Adding child to base with avatar:", newChild.avatar);
     dispatch(addChild(newChild));
     router.push('/(tabs)');
   }
@@ -57,6 +57,7 @@ export default function addChildScreen() {
       avatar,
       addInfo
     };
+    console.log("Adding child to base with avatar:", updatedChild.avatar);
     dispatch(updateChild(updatedChild));
     router.push('/(tabs)');
   }
@@ -71,7 +72,7 @@ export default function addChildScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colorScheme === 'dark' ? 'rgb(18, 18, 18)' : '#fff' }]}>
       <View style={styles.form}>
         <Text style={styles.label}>Name</Text>
         <TextInput
@@ -117,7 +118,7 @@ export default function addChildScreen() {
           )}
         <GenderToggle sex={sex} setSex={setSex} />
         </View>
-
+        <AvatarSelector avatar={avatar} setAvatar={setAvatar} />
         <StyledText style={styles.addlabel}>
           Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors (optional)
         </StyledText>

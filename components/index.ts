@@ -1,3 +1,4 @@
+import AvatarSelector from "./AvatarSelector";
 import CustomButton from "./CustomButton";
 import GenderSelector from "./GenderSelector";
 import GenderToggle from "./GenderToggle";
@@ -7,5 +8,6 @@ export {
   GenderSelector,
   CustomButton,
   GenderToggle,
-  StyledText
+  StyledText,
+  AvatarSelector
 }

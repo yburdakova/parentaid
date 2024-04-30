@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export interface ChildDataTypes {
   id: number;
   name: string;
@@ -44,4 +46,9 @@ export interface  GenderToggleProps{
 export interface ButtonProps {
   title: string;
   onPress: () => void;
+}
+
+export interface  AvatarSectionProps{
+  avatar: ImageSourcePropType,
+  setAvatar: (avatar: ImageSourcePropType) => void
 }
