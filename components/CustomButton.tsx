@@ -1,11 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity} from 'react-native'
 import React from 'react'
 import Colors from '@/constants/Colors';
+import { ButtonProps } from '@/constants/types';
 
-interface ButtonProps {
-  title: string;
-  onPress: () => void;
-}
+
 
 export default function CustomButton({ title, onPress }: ButtonProps) {
   return (
@@ -30,8 +28,8 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.default.text,
     textTransform: 'uppercase',
-    fontFamily: 'PoppinsBold',
     textAlign: 'center',
+    fontFamily: 'PoppinsBold',
     fontSize: 16,
   },
 });

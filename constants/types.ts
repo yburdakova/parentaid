@@ -41,3 +41,7 @@ export interface  GenderToggleProps{
   sex: 'girl' | 'boy',
   setSex: (sex: 'girl' | 'boy') => void
 }
+export interface ButtonProps {
+  title: string;
+  onPress: () => void;
+}

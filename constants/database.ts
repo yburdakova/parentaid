@@ -14,15 +14,15 @@ export const children: ChildDataTypes[] = [
     id: 2,
     name: "Maxim",
     dateBirth: "2017-10-23T00:00:00.000Z",
-    sex: "girl",
+    sex: "boy",
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
   {
     id: 3,
-    name: "Alexandro",
+    name: "Alexandrostos",
     dateBirth: "2022-01-15T00:00:00.000Z",
-    sex: "girl",
+    sex: "boy",
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
@@ -34,12 +34,5 @@ export const children: ChildDataTypes[] = [
     avatar: panda,
     addInfo: "there is no addition informaton"
   },
-  {
-    id: 5,
-    name: "Maria",
-    dateBirth: "2022-01-15T00:00:00.000Z",
-    sex: "girl",
-    avatar: panda,
-    addInfo: "there is no addition informaton"
-  }
+
 ]

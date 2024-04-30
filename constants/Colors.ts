@@ -23,6 +23,6 @@ export default {
     border: textColor,
     blackText: "000",
     whiteText: "fff",
-    backgroundactive: ''
+    active: tintColorLight
   }
 };

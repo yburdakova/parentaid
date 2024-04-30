@@ -1,5 +1,5 @@
 import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import { ChildDataTypes } from '@/constants/types';
 import Colors from '@/constants/Colors';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { addChild, updateChild } from '../store/slices/childrenSlice';
 import GenderSelector from '@/components/GenderSelector';
 import GenderToggle from '@/components/GenderToggle';
+import { StyledText } from '@/components';
 
 
 export default function addChildScreen() {
@@ -19,12 +20,15 @@ export default function addChildScreen() {
   const router = useRouter();
   const route = useRoute();
 
+  useEffect(() => {
+    child && setDate (new Date(child.dateBirth.slice(0, 10)))
+  },[])
+
   const { child } = route.params as { child: ChildDataTypes } ?? { child: null };
   const { change } = route.params as {change: boolean};
   const [name, setName] = useState(child ? child.name : '')
-  const [dateBirth, setDateBirth] = useState('date')
-  const [sex, setSex] = useState <'girl' | 'boy'>('girl')
-  const [addInfo, setAddInfo] = useState('addinfo')
+  const [sex, setSex] = useState <'girl' | 'boy'>(child ? child.sex : 'boy')
+  const [addInfo, setAddInfo] = useState('Addinfo')
   const [avatar, setAvatar] = useState('avatar')
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
@@ -74,11 +78,15 @@ export default function addChildScreen() {
           style={styles.input}
           value={name}
           onChangeText={setName}
+          placeholder='required'
         />
-        <TouchableOpacity onPress={() => { setOpenDatePicker(true) }}>
-          <Text style={styles.input}>{date.toDateString()}</Text>
-        </TouchableOpacity>
-
+        <View style={styles.datagenderBox}>
+          <View style={styles.dateContainer}>
+            <Text style={styles.datelabel}>Date of Birth</Text>
+            <TouchableOpacity onPress={() => { setOpenDatePicker(true) }} style={styles.dateBox}>
+              <Text style={styles.date}>{date.toISOString().slice(0, 10)}</Text>
+            </TouchableOpacity>
+          </View>
         {openDatePicker && (
             <Modal
               transparent={true}
@@ -108,8 +116,13 @@ export default function addChildScreen() {
             </Modal>
           )}
         <GenderToggle sex={sex} setSex={setSex} />
+        </View>
+
+        <StyledText style={styles.addlabel}>
+          Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors (optional)
+        </StyledText>
         <TextInput
-          style={styles.input}
+          style={styles.addinput}
           multiline={true}
           numberOfLines={4}
           value={addInfo}
@@ -136,21 +149,64 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   form: {
     flex: 1,
     width: '100%',
+    height:'100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
 
+  datagenderBox:{
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    paddingHorizontal: 20,
+    justifyContent: "space-between"
+  },
+  dateContainer:{
+    display:'flex',
+    flexDirection: 'column',
+    gap: 10,
+    width: 'auto',
+    justifyContent: 'center',
+    alignItems: "center",
+  },
+  dateBox:{
+    display: 'flex',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: 'transparent',
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: Colors.default.border,
+  },
+  datelabel:{
+    backgroundColor: 'transparent',
+    fontFamily: 'PoppinsSemiBold',
+    fontSize: 18,
+    alignSelf: 'flex-start',
+    color: Colors.default.text,
+  },
+  date:{
+    color: Colors.default.text,
+    fontSize: 22
+  },
+  addlabel:{
+    fontSize: 16,
+    color: Colors.default.text,
+    textAlign: 'center',
+    padding: 10
   },
   label: {
     display: 'flex',
     width: '90%',
-    paddingVertical: 10,
     backgroundColor: 'transparent',
     fontSize: 24,
-    color: Colors.default.text
+    color: Colors.default.text,
+    fontFamily: "PoppinsSemiBold"
   },
   input: {
     display: 'flex',
@@ -162,7 +218,22 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.default.border,
     marginVertical:10,
-    color: Colors.default.text
+    color: Colors.default.text,
+    fontSize: 22
+  },
+  addinput:{
+    display: 'flex',
+    width: '90%',
+    height: 120,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: 'transparent',
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: Colors.default.border,
+    marginVertical:10,
+    color: Colors.default.text,
+    fontSize: 22
   },
   checkBox:{
     borderWidth: 2,

@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, Image} from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
 import { GenderSelectorProps } from '@/constants/types';
+import Colors from '@/constants/Colors';
 
 export default function GenderSelector({ selected, onPress }: GenderSelectorProps) {
   return (
@@ -21,12 +22,11 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderColor: '#ccc',
+    borderColor: Colors.default.border,
     borderRadius: 15,
-    margin: 5,
 },
 genderSelected: {
-    borderColor: '#007bff',
+    borderColor: Colors.default.active,
 },
 
 checkIcon: {
