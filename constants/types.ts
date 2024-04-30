@@ -31,3 +31,13 @@ export interface AgeType {
   years: number,
   months: number
 }
+
+export interface GenderSelectorProps {
+  selected: boolean,
+  onPress: () => void
+}
+
+export interface  GenderToggleProps{
+  sex: 'girl' | 'boy',
+  setSex: (sex: 'girl' | 'boy') => void
+}

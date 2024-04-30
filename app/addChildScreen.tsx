@@ -5,11 +5,11 @@ import { ChildDataTypes } from '@/constants/types';
 import Colors from '@/constants/Colors';
 import CustomButton from '@/components/CustomButton';
 import { useRouter } from 'expo-router';
-import { children } from '@/constants/database';
-import { CheckBox } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch } from 'react-redux';
 import { addChild, updateChild } from '../store/slices/childrenSlice';
+import GenderSelector from '@/components/GenderSelector';
+import GenderToggle from '@/components/GenderToggle';
 
 
 export default function addChildScreen() {
@@ -23,7 +23,7 @@ export default function addChildScreen() {
   const { change } = route.params as {change: boolean};
   const [name, setName] = useState(child ? child.name : '')
   const [dateBirth, setDateBirth] = useState('date')
-  const [sex, setSex] = useState('girl')
+  const [sex, setSex] = useState <'girl' | 'boy'>('girl')
   const [addInfo, setAddInfo] = useState('addinfo')
   const [avatar, setAvatar] = useState('avatar')
   const [openDatePicker, setOpenDatePicker] = useState(false)
@@ -35,7 +35,7 @@ export default function addChildScreen() {
     const newChild = {
       id: Math.random(),
       name,
-      dateBirth: date.toISOString(), // Сохраняем дату в формате ISO
+      dateBirth: date.toISOString(),
       sex: sex as 'girl' | 'boy',
       avatar,
       addInfo
@@ -69,6 +69,7 @@ export default function addChildScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.form}>
+        <Text style={styles.label}>Name</Text>
         <TextInput
           style={styles.input}
           value={name}
@@ -106,16 +107,7 @@ export default function addChildScreen() {
               </View>
             </Modal>
           )}
-        <CheckBox
-          title="Boy"
-          checked={sex === 'boy'}
-          onPress={() => setSex('boy')}
-        />
-        <CheckBox
-          title="Girl"
-          checked={sex === 'girl'}
-          onPress={() => setSex('girl')}
-        />
+        <GenderToggle sex={sex} setSex={setSex} />
         <TextInput
           style={styles.input}
           multiline={true}
@@ -152,6 +144,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 
   },
+  label: {
+    display: 'flex',
+    width: '90%',
+    paddingVertical: 10,
+    backgroundColor: 'transparent',
+    fontSize: 24,
+    color: Colors.default.text
+  },
   input: {
     display: 'flex',
     width: '90%',
@@ -163,6 +163,13 @@ const styles = StyleSheet.create({
     borderColor: Colors.default.border,
     marginVertical:10,
     color: Colors.default.text
+  },
+  checkBox:{
+    borderWidth: 2,
+    borderColor: Colors.default.border,
+    backgroundColor: 'transparent',
+    borderRadius: 15,
+
   },
   centeredView: {
     flex: 1,

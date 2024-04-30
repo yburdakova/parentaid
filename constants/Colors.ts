@@ -22,6 +22,7 @@ export default {
     text: textColor,
     border: textColor,
     blackText: "000",
-    whiteText: "fff"
+    whiteText: "fff",
+    backgroundactive: ''
   }
 };
