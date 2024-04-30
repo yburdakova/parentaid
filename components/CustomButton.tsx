@@ -18,7 +18,7 @@ export default function CustomButton({ title, onPress }: ButtonProps) {
 const styles = StyleSheet.create({
   button: {
     display: 'flex',
-    width: '90%',
+    width: 'auto',
     paddingVertical: 10,
     paddingHorizontal: 20,
     backgroundColor: 'transparent',

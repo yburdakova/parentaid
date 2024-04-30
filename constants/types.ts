@@ -18,3 +18,11 @@ export type addChildScreenParams = {
   child: ChildDataTypes;
   change: boolean;
 };
+
+export interface ChildrenState {
+  children: ChildDataTypes[];
+}
+
+export interface RootState {
+  children: ChildrenState;
+}

@@ -10,7 +10,7 @@ import { useColorScheme } from './useColorScheme.web';
 
 export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
   const colorScheme = useColorScheme();
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.infoBox}>

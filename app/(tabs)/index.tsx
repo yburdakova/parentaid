@@ -5,18 +5,20 @@ import { useNavigation, useRouter } from 'expo-router';
 import { children } from '@/constants/database';
 import ChildCard from '@/components/ChildCard';
 import { useState } from 'react';
-import { addChildScreenParams, ChildDataTypes } from '@/constants/types';
-import { NavigationProp } from '@react-navigation/native';
+import {  ChildDataTypes, RootState } from '@/constants/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { addChild, removeChild, updateChild } from '@/store/slices/childrenSlice';
 
 export default function TabOneScreen() {
-  const [childrenList, setChildreList] = useState(children)
-  const router = useRouter();
+
   const navigation = useNavigation<any>();
+  const router = useRouter();
+  const childrenList = useSelector((state: RootState) => state.children.children);
+  const dispatch = useDispatch();
+
 
   const handleDelete = (id: number) => {
-    const newChildrenList = childrenList.filter(child => child.id !== id);
-    setChildreList(newChildrenList)
-
+    dispatch(removeChild(id));
   };
 
   const handleEdit = (child: ChildDataTypes) => {
@@ -38,10 +40,12 @@ export default function TabOneScreen() {
           />
         ))}
       </ScrollView>
-      <CustomButton
-        title="Add Child"
-        onPress={() => router.push('/addChildScreen')}
-      />
+      <View style={styles.buttonBox}>
+        <CustomButton
+          title="Add Child"
+          onPress={() => router.push('/addChildScreen')}
+        />
+      </View>
     </View>
   );
 }
@@ -58,4 +62,7 @@ const styles = StyleSheet.create({
     minWidth: '100%',
     alignItems: 'center',
   },
+  buttonBox:{
+    width: '90%'
+  }
 });
