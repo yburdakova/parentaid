@@ -26,3 +26,8 @@ export interface ChildrenState {
 export interface RootState {
   children: ChildrenState;
 }
+
+export interface AgeType {
+  years: number,
+  months: number
+}

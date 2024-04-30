@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View } from 'react-native'
+import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View } from 'react-native'
 import React, { useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import { ChildDataTypes } from '@/constants/types';
@@ -8,12 +8,17 @@ import { useRouter } from 'expo-router';
 import { children } from '@/constants/database';
 import { CheckBox } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useDispatch } from 'react-redux';
+import { addChild, updateChild } from '../store/slices/childrenSlice';
+
 
 export default function addChildScreen() {
   const colorScheme = useColorScheme();
+  const dispatch = useDispatch();
 
   const router = useRouter();
   const route = useRoute();
+
   const { child } = route.params as { child: ChildDataTypes } ?? { child: null };
   const { change } = route.params as {change: boolean};
   const [name, setName] = useState(child ? child.name : '')
@@ -23,29 +28,42 @@ export default function addChildScreen() {
   const [avatar, setAvatar] = useState('avatar')
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
-  const [tempDate, setTempDate] = useState(new Date()); 
+  const [tempDate, setTempDate] = useState(new Date());
+
 
   const addChildToBase = () => {
     const newChild = {
-      id: children.length+1,
-      name: name,
-      dateBirth: date,
-      sex: sex as "girl" | "boy",
-      avatar: avatar,
-      addInfo: addInfo
-    }
-    children.push(newChild)
-    router.push('/(tabs)')
+      id: Math.random(),
+      name,
+      dateBirth: date.toISOString(), // Сохраняем дату в формате ISO
+      sex: sex as 'girl' | 'boy',
+      avatar,
+      addInfo
+    };
+    dispatch(addChild(newChild));
+    router.push('/(tabs)');
   }
 
-  const changeChildData = () => {}
+  const changeChildData = () => {
+    const updatedChild = {
+      id: child.id,
+      name,
+      dateBirth: date.toISOString(),
+      sex: sex as 'girl' | 'boy',
+      avatar,
+      addInfo
+    };
+    dispatch(updateChild(updatedChild));
+    router.push('/(tabs)');
+  }
+
   const applyDate = () => {
-    setDate(tempDate); // Подтверждение выбора даты
+    setDate(tempDate);
     setOpenDatePicker(false);
   };
 
   const closeModal = () => {
-    setOpenDatePicker(false); // Отмена без изменения основной даты
+    setOpenDatePicker(false);
   };
 
   return (
@@ -104,6 +122,9 @@ export default function addChildScreen() {
           numberOfLines={4}
           value={addInfo}
           onChangeText={setAddInfo}
+          returnKeyType="done"
+          blurOnSubmit={true}
+          onSubmitEditing={Keyboard.dismiss}
         />
       </View>
       <View style={styles.buttonBox}>
@@ -129,8 +150,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: "red",
+
   },
   input: {
     display: 'flex',

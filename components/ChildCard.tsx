@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Text, View } from './Themed';
-import { ChildCardProps } from '@/constants/types';
+import { AgeType, ChildCardProps } from '@/constants/types';
 import Colors from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
 import { useColorScheme } from './useColorScheme.web';
+import { getAge } from '@/middleware/formatedDate';
 
 
 
 export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
   const colorScheme = useColorScheme();
+  const [age, setAge] = useState<AgeType>({years: 0, months: 0})
+
+  useEffect(() => {
+    const dataBirth = getAge(data.dateBirth)
+    setAge(dataBirth)
+  },[])
 
   return (
     <View style={styles.container}>
@@ -17,7 +24,7 @@ export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
       <Image source={data.avatar} style={styles.avatar}/>
         <View style={styles.infoContainer}>
         <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.age}>{data.dateBirth}</Text>
+          <Text style={styles.age}>{age.years} y {age.months} m</Text>
           <Text style={styles.sessions}>4 sessions</Text>
         </View>
       </View>
