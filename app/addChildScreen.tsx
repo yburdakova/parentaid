@@ -6,7 +6,7 @@ import Colors from '@/constants/Colors';
 import { useNavigation, useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChild, setChange, updateChild } from '../store/slices/childrenSlice';
+import { addChild, setActualChild, setChange, updateChild } from '../store/slices/childrenSlice';
 import CustomButton from '@/components/CustomButton';
 import GenderToggle from '@/components/GenderToggle';
 import AvatarSelector from '@/components/AvatarSelector';
@@ -34,7 +34,6 @@ export default function addChildScreen() {
 
   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 
-
   useEffect(() => {
     child && setDate(new Date(child.dateBirth));
   }, [child]);
@@ -50,6 +49,7 @@ export default function addChildScreen() {
     };
     dispatch(addChild(newChild));
     dispatch(setChange(false));
+    dispatch(setActualChild(null))
     router.push('/(tabs)');
   }
 
@@ -64,6 +64,7 @@ export default function addChildScreen() {
     };
     dispatch(updateChild(updatedChild));
     dispatch(setChange(false));
+    dispatch(setActualChild(null))
     router.push('/(tabs)');
   }
 

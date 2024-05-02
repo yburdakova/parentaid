@@ -8,7 +8,35 @@ export const children: ChildDataTypes[] = [
     dateBirth: "2007-05-16T00:00:00.000Z",
     sex: "girl",
     avatar: Image.resolveAssetSource(require('../assets/images/avatars/01.png')).uri ,
-    addInfo: "there is no addition informaton"
+    addInfo: "there is no addition informaton",
+    sessions: [
+      {
+        id:1,
+        title: "Title Of Dialog One Line 01",
+        data: "2007-05-16T00:00:00.000Z",
+        messages: [
+          {
+            id:1,
+            time: "2007-05-16T00:00:00.000Z",
+            message: "Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
+            server: true
+          }
+        ]
+      },
+      {
+        id:2,
+        title: "Title Of Dialog One Line 02",
+        data: "2007-05-16T00:00:00.000Z",
+        messages: [
+          {
+            id: 1,
+            time: "2007-05-16T00:00:00.000Z",
+            message: "Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
+            server: true
+          }
+        ]
+      },
+    ]
   },
   {
     id: 2,
@@ -16,7 +44,8 @@ export const children: ChildDataTypes[] = [
     dateBirth: "2017-10-23T00:00:00.000Z",
     sex: "boy",
     avatar: Image.resolveAssetSource(require('../assets/images/avatars/01.png')).uri ,
-    addInfo: "there is no addition informaton"
+    addInfo: "there is no addition informaton",
+    sessions: []
   }
 
 ]

@@ -1,40 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Text, View } from './Themed';
-import { AgeType, ChildCardProps } from '@/constants/types';
+import { AgeType, SessionCardProps } from '@/constants/types';
 import Colors from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
 import { getAge } from '@/middleware/formatedDate';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'expo-router';
-import { setActualChild } from '@/store/slices/childrenSlice';
 
-export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
+export default function SessionCard({ data, onDelete, onEdit }: SessionCardProps) {
 
   const dispatch = useDispatch();
   const router = useRouter();
 
   const [age, setAge] = useState<AgeType>({years: 0, months: 0, days: 0})
 
-  useEffect(() => {
-    const dataBirth = getAge(data.dateBirth);
-    setAge(dataBirth);
-  }, [data.dateBirth]);
+  // useEffect(() => {
+  //   const dataBirth = getAge(data.dateBirth);
+  //   setAge(dataBirth);
+  // }, [data.time]);
 
   const toSessionScreen = () => {
-    dispatch(setActualChild(data))
-    router.push('/sesListScreen');
+    // dispatch(setActualChild(data))
+    router.push('/sessionScreen');
   }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.infoBox} onPress={toSessionScreen}>
-      {data.avatar && <Image source={{ uri: data.avatar }} style={styles.avatar} />}
-        <View style={styles.infoContainer}>
-        <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.age}>{age.years} y {age.months} m {age.days} d</Text>
-          <Text style={styles.sessions}>{data.sessions?.length} sessions</Text>
-        </View>
+        <Text style={styles.subtitle}>{data.data}</Text>
+        <Text style={styles.title}>{data.title}</Text>
+        <Text style={styles.subtitle}>{data.messages.length} messages</Text>
       </TouchableOpacity>
       <View style={styles.icons}>
         <TouchableOpacity onPress={onEdit} style={styles.icon}>
@@ -62,23 +58,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: Colors.default.border
   },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  name: {
-    textTransform: 'uppercase',
-    fontFamily: 'PoppinsBold',
-    fontSize: 22,
-    display: 'flex',
-  },
   infoBox: {
     display: 'flex',
     flexGrow: 1,
-    flexDirection:'row',
+    flexDirection:'column',
     borderColor: 'red',
-    borderWidth: 1
+    borderWidth: 1,
+    gap:10,
+    justifyContent: 'center',
   },
   icons: {
     borderWidth: 1,
@@ -90,15 +77,14 @@ const styles = StyleSheet.create({
   icon: {
     padding: 10
   },
-  infoContainer:{
-    marginHorizontal: 10
-  },
-  age:{
+  title: {
     fontSize: 18,
-    fontFamily: 'PoppinsSemiBold',
+    color: Colors.default.text,
+    fontFamily: "PoppinsSemiBold",
+    display: 'flex',
+    flexWrap: "wrap"
   },
-  sessions: {
-    fontSize: 18,
-    fontFamily: 'PoppinsRegular',
+  subtitle: {
+
   }
 });
