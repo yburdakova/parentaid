@@ -6,6 +6,8 @@ import { children } from '@/constants/database';
 
 const initialState: ChildrenState = {
   children: children,
+  change: false,
+  actualChild: null,
 };
 
 const childrenSlice = createSlice({
@@ -23,13 +25,20 @@ const childrenSlice = createSlice({
       if (index !== -1) {
         state.children[index] = action.payload;
       }
-    }
-  },
-});
+    },
+    setChange: (state, action: PayloadAction<boolean>) => {
+      state.change = action.payload
+    },
+    setActualChild: (state, action: PayloadAction<ChildDataTypes | null>) => {
+      state.actualChild = action.payload
+    },
+}});
 
 export const {
   addChild,
   removeChild,
-  updateChild
+  updateChild,
+  setChange,
+  setActualChild
 } = childrenSlice.actions;
 export default childrenSlice.reducer;

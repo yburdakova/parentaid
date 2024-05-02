@@ -8,22 +8,21 @@ import { getAge } from '@/middleware/formatedDate';
 
 export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
 
-  const [age, setAge] = useState<AgeType>({years: 0, months: 0})
-  const [newavatar, setNewavatar] = useState<string>( Image.resolveAssetSource(require('../assets/images/logo-kid.png')).uri);
+  const [age, setAge] = useState<AgeType>({years: 0, months: 0, days: 0})
 
+  console.log(data)
   useEffect(() => {
-    const dataBirth = getAge(data.dateBirth)
-    setAge(dataBirth)
-    setNewavatar(data.avatar)
-  },[])
+    const dataBirth = getAge(data.dateBirth);
+    setAge(dataBirth);
+  }, [data.dateBirth]);
 
   return (
     <View style={styles.container}>
       <View style={styles.infoBox}>
-      {newavatar && <Image source={{ uri: newavatar }} style={styles.avatar} />}
+      {data.avatar && <Image source={{ uri: data.avatar }} style={styles.avatar} />}
         <View style={styles.infoContainer}>
         <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.age}>{age.years} y {age.months} m</Text>
+          <Text style={styles.age}>{age.years} y {age.months} m {age.days} d</Text>
           <Text style={styles.sessions}>4 sessions</Text>
         </View>
       </View>

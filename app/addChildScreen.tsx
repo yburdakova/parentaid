@@ -1,12 +1,12 @@
 import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native';
-import { ChildDataTypes } from '@/constants/types';
+import { ChildDataTypes, RootState } from '@/constants/types';
 import Colors from '@/constants/Colors';
 import { useNavigation, useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useDispatch } from 'react-redux';
-import { addChild, updateChild } from '../store/slices/childrenSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addChild, setChange, updateChild } from '../store/slices/childrenSlice';
 import CustomButton from '@/components/CustomButton';
 import GenderToggle from '@/components/GenderToggle';
 import AvatarSelector from '@/components/AvatarSelector';
@@ -18,12 +18,10 @@ export default function addChildScreen() {
   const dispatch = useDispatch();
 
   const router = useRouter();
-  const route = useRoute();
-  const navigation = useNavigation<any>();
-  
-  const { child } = route.params as { child: ChildDataTypes } ?? { child: null };
-  
-  const { change } = route.params as {change: boolean};
+
+  const childrenList = useSelector((state: RootState) => state.children.children);
+  const child = useSelector((state: RootState) => state.children.actualChild);
+  const isChange = useSelector((state: RootState) => state.children.change)
 
   const [name, setName] = useState(child ? child.name : '')
   const [sex, setSex] = useState <'girl' | 'boy'>(child ? child.sex : 'boy')
@@ -32,17 +30,18 @@ export default function addChildScreen() {
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
   const [tempDate, setTempDate] = useState(new Date());
+  const [ id ] = useState(child ? child.id : 0)
+
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
 
   useEffect(() => {
-    child && setDate (new Date(child.dateBirth))
-    console.log(child ? `window of edit childId ${child.id} is opened` : "new child")
-  },[])
-
-
+    child && setDate(new Date(child.dateBirth));
+  }, [child]);
 
   const addChildToBase = () => {
     const newChild = {
-      id: Math.random(),
+      id: childrenList.length + 1,
       name,
       dateBirth: date.toISOString(),
       sex: sex as 'girl' | 'boy',
@@ -50,12 +49,13 @@ export default function addChildScreen() {
       addInfo
     };
     dispatch(addChild(newChild));
-    navigation.goBack()
+    dispatch(setChange(false));
+    router.push('/(tabs)');
   }
 
   const changeChildData = () => {
     const updatedChild = {
-      id: child.id,
+      id: id,
       name,
       dateBirth: date.toISOString(),
       sex: sex as 'girl' | 'boy',
@@ -63,6 +63,7 @@ export default function addChildScreen() {
       addInfo
     };
     dispatch(updateChild(updatedChild));
+    dispatch(setChange(false));
     router.push('/(tabs)');
   }
 
@@ -89,7 +90,7 @@ export default function addChildScreen() {
           <View style={styles.dateContainer}>
             <Text style={styles.datelabel}>Date of Birth</Text>
             <TouchableOpacity onPress={() => { setOpenDatePicker(true) }} style={styles.dateBox}>
-              <Text style={styles.date}>{date.toISOString().slice(0, 10)}</Text>
+            <Text style={styles.date}>{formattedDate}</Text>
             </TouchableOpacity>
           </View>
         {openDatePicker && (
@@ -138,7 +139,7 @@ export default function addChildScreen() {
         />
       </View>
       <View style={styles.buttonBox}>
-        {change ? (
+        {isChange ? (
           <CustomButton title="Save Data" onPress={changeChildData}/>
         ) : (
           <CustomButton title="Add Child" onPress={addChildToBase}/>

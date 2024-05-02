@@ -23,6 +23,8 @@ export type addChildScreenParams = {
 
 export interface ChildrenState {
   children: ChildDataTypes[];
+  change: boolean;
+  actualChild: ChildDataTypes | null
 }
 
 export interface RootState {
@@ -31,7 +33,8 @@ export interface RootState {
 
 export interface AgeType {
   years: number,
-  months: number
+  months: number,
+  days: number
 }
 
 export interface GenderSelectorProps {

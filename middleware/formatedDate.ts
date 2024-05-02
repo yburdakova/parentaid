@@ -1,17 +1,23 @@
-export function getAge(dateString: string): { years: number, months: number } {
-    const date = new Date(dateString);
+export function getAge(dateString: string): { years: number, months: number, days: number } {
+    const birthDate = new Date(dateString);
     const now = new Date();
 
-    const yearsDiff = now.getFullYear() - date.getFullYear();
-    const monthsDiff = now.getMonth() - date.getMonth();
+    let years = now.getFullYear() - birthDate.getFullYear();
+    let months = now.getMonth() - birthDate.getMonth();
+    let days = now.getDate() - birthDate.getDate();
 
-    let years = yearsDiff;
-    let months = monthsDiff;
+    const isBirthdayPassed = now.getDate() >= birthDate.getDate();
 
-    if (months < 0) {
+    if (months < 0 || (months === 0 && !isBirthdayPassed)) {
         years--;
         months += 12;
     }
 
-    return { years, months };
+    if (!isBirthdayPassed) {
+        now.setMonth(now.getMonth() - 1);
+        days += (new Date(now.getFullYear(), now.getMonth() + 1, 0)).getDate();
+        months--;
+    }
+
+    return { years, months, days };
 }
