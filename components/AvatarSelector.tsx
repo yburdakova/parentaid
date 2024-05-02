@@ -1,64 +1,58 @@
-import { StyleSheet, Text, View, Image, ImageSourcePropType } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import Colors from '@/constants/Colors'
+import { useState, useEffect } from 'react';
+import { Button, Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { AvatarSectionProps } from '@/constants/types';
-import { CustomButton } from '.';
-import logo from '../assets/images/logo-kid.png'
+import Colors from '@/constants/Colors';
 
 export default function AvatarSelector({ avatar, setAvatar }: AvatarSectionProps) {
+  const [image, setImage] = useState<string>(Image.resolveAssetSource(require('../assets/images/logo-kid.png')).uri);
 
-  const [selectedImage, setSelectedImage] = useState<ImageSourcePropType>(logo);
-
-  useEffect(() => {
-    setSelectedImage(avatar);
-  }, []);
+useEffect(() => {
+  avatar && setImage(avatar)
+},[]);
 
   const pickImage = async () => {
-    // const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // if (status !== 'granted') {
-    //     alert('Permission to access media library is required!');
-    //     return;
-    // }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-    // const result = await ImagePicker.launchImageLibraryAsync({
-    //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //     allowsEditing: true,
-    //     aspect: [4, 3],
-    //     quality: 1,
-    // });
-
-    // console.log(result); 
-
-    // if (!result.cancelled && result.assets && result.assets.length > 0) {
-    //     const selectedImageUri = result.assets[0].uri;
-    //     setAvatar(selectedImageUri);
-    //     setSelectedImage(selectedImageUri);
-    // }
-};
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      setAvatar(result.assets[0].uri)
+    }
+  };
 
   return (
-    <View>
-      <Text style={styles.text}>Choose avatar or select your own</Text>
-      {logo ? (
-        <Image source={logo } />
-      ) : (
-        <Text style={styles.text}>NO PHOTO</Text>
-      )}
-      <CustomButton title="Choose Avatar" onPress={pickImage} />
+    <View style={styles.container}>
+      <Text style={styles.title}>Choose avatar or select your own</Text>
+      <View></View>
+      <TouchableOpacity style={styles.container} onPress={pickImage} >
+        {image && <Image source={{ uri: image }} style={styles.image} />}
+      </TouchableOpacity>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  text:{
-    color: Colors.default.text
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop:10
   },
-  imagePreview: {
+  title:{
+    display: 'flex',
+    width: '90%',
+    backgroundColor: 'transparent',
+    fontSize: 18,
+    color: Colors.default.text,
+    fontFamily: "PoppinsSemiBold"
+  },
+  image: {
     width: 100,
     height: 100,
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: Colors.default.border
   },
-})
+});

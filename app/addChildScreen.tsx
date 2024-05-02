@@ -1,4 +1,4 @@
-import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View } from 'react-native'
+import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, useColorScheme, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import { ChildDataTypes } from '@/constants/types';
@@ -7,8 +7,10 @@ import { useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch } from 'react-redux';
 import { addChild, updateChild } from '../store/slices/childrenSlice';
-import { StyledText, GenderToggle,CustomButton, AvatarSelector } from '@/components';
-import { ScreenContainer } from 'react-native-screens';
+import CustomButton from '@/components/CustomButton';
+import GenderToggle from '@/components/GenderToggle';
+import AvatarSelector from '@/components/AvatarSelector';
+import StyledText from '@/components/StyledText';
 
 
 export default function addChildScreen() {
@@ -28,7 +30,7 @@ export default function addChildScreen() {
   const [name, setName] = useState(child ? child.name : '')
   const [sex, setSex] = useState <'girl' | 'boy'>(child ? child.sex : 'boy')
   const [addInfo, setAddInfo] = useState('Addinfo')
-  const [avatar, setAvatar] = useState(child ? child.avatar : null)
+  const [avatar, setAvatar] = useState(child ? child.avatar : Image.resolveAssetSource(require('../assets/images/logo-kid.png')).uri)
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
   const [tempDate, setTempDate] = useState(new Date());
@@ -151,6 +153,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
+  },
+  image:{
+    width: 100,
+    height: 100
   },
   form: {
     flex: 1,

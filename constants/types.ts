@@ -5,7 +5,7 @@ export interface ChildDataTypes {
   name: string;
   dateBirth: string;
   sex: 'girl' | 'boy';
-  avatar: any;
+  avatar: string;
   addInfo?: string;
 }
 
@@ -49,6 +49,6 @@ export interface ButtonProps {
 }
 
 export interface  AvatarSectionProps{
-  avatar: ImageSourcePropType,
-  setAvatar: (avatar: ImageSourcePropType) => void
+  avatar: string,
+  setAvatar: (avatar: string) => void
 }

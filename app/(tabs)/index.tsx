@@ -2,12 +2,10 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { View } from '@/components/Themed';
 import CustomButton from '@/components/CustomButton';
 import { useNavigation, useRouter } from 'expo-router';
-import { children } from '@/constants/database';
 import ChildCard from '@/components/ChildCard';
-import { useState } from 'react';
 import {  ChildDataTypes, RootState } from '@/constants/types';
 import { useSelector, useDispatch } from 'react-redux';
-import { addChild, removeChild, updateChild } from '@/store/slices/childrenSlice';
+import { removeChild } from '@/store/slices/childrenSlice';
 
 export default function TabOneScreen() {
 
@@ -23,7 +21,6 @@ export default function TabOneScreen() {
 
   const handleEdit = (child: ChildDataTypes) => {
     navigation.navigate('addChildScreen', { child, change: true });
-
   };
 
 

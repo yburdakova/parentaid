@@ -4,24 +4,23 @@ import { Text, View } from './Themed';
 import { AgeType, ChildCardProps } from '@/constants/types';
 import Colors from '@/constants/Colors';
 import { Feather } from '@expo/vector-icons';
-import { useColorScheme } from './useColorScheme.web';
 import { getAge } from '@/middleware/formatedDate';
 
-
-
 export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
-  const colorScheme = useColorScheme();
+
   const [age, setAge] = useState<AgeType>({years: 0, months: 0})
+  const [newavatar, setNewavatar] = useState<string>( Image.resolveAssetSource(require('../assets/images/logo-kid.png')).uri);
 
   useEffect(() => {
     const dataBirth = getAge(data.dateBirth)
     setAge(dataBirth)
+    setNewavatar(data.avatar)
   },[])
 
   return (
     <View style={styles.container}>
       <View style={styles.infoBox}>
-      <Image source={data.avatar} style={styles.avatar}/>
+      {newavatar && <Image source={{ uri: newavatar }} style={styles.avatar} />}
         <View style={styles.infoContainer}>
         <Text style={styles.name}>{data.name}</Text>
           <Text style={styles.age}>{age.years} y {age.months} m</Text>
@@ -55,11 +54,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.default.border
   },
   avatar: {
-    borderWidth: 1,
-    borderColor: "red",
-    display: "flex",
-    objectFit: "contain",
-    height: '100%',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   name: {
     textTransform: 'uppercase',
