@@ -20,6 +20,7 @@ export default function TabOneScreen() {
   };
 
   const handleEdit = (child: ChildDataTypes) => {
+    console.log("Edit button for child childId" + child.id + " is clicked")
     navigation.navigate('addChildScreen', { child, change: true });
   };
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useRoute } from '@react-navigation/native';
 import { ChildDataTypes } from '@/constants/types';
 import Colors from '@/constants/Colors';
-import { useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useDispatch } from 'react-redux';
 import { addChild, updateChild } from '../store/slices/childrenSlice';
@@ -19,21 +19,25 @@ export default function addChildScreen() {
 
   const router = useRouter();
   const route = useRoute();
-
-  useEffect(() => {
-    child && setDate (new Date(child.dateBirth))
-  },[])
-
+  const navigation = useNavigation<any>();
+  
   const { child } = route.params as { child: ChildDataTypes } ?? { child: null };
+  
   const { change } = route.params as {change: boolean};
 
   const [name, setName] = useState(child ? child.name : '')
   const [sex, setSex] = useState <'girl' | 'boy'>(child ? child.sex : 'boy')
-  const [addInfo, setAddInfo] = useState('Addinfo')
+  const [addInfo, setAddInfo] = useState(child ? child.addInfo :'')
   const [avatar, setAvatar] = useState(child ? child.avatar : Image.resolveAssetSource(require('../assets/images/logo-kid.png')).uri)
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [date, setDate] = useState(new Date())
   const [tempDate, setTempDate] = useState(new Date());
+
+  useEffect(() => {
+    child && setDate (new Date(child.dateBirth))
+    console.log(child ? `window of edit childId ${child.id} is opened` : "new child")
+  },[])
+
 
 
   const addChildToBase = () => {
@@ -45,9 +49,8 @@ export default function addChildScreen() {
       avatar,
       addInfo
     };
-    console.log("Adding child to base with avatar:", newChild.avatar);
     dispatch(addChild(newChild));
-    router.push('/(tabs)');
+    navigation.goBack()
   }
 
   const changeChildData = () => {
@@ -59,9 +62,8 @@ export default function addChildScreen() {
       avatar,
       addInfo
     };
-    console.log("Adding child to base with avatar:", updatedChild.avatar);
     dispatch(updateChild(updatedChild));
-    router.push('/(tabs)');
+    navigation.goBack()
   }
 
   const applyDate = () => {
