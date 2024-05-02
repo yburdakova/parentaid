@@ -63,7 +63,7 @@ export default function addChildScreen() {
       addInfo
     };
     dispatch(updateChild(updatedChild));
-    navigation.goBack()
+    router.push('/(tabs)');
   }
 
   const applyDate = () => {

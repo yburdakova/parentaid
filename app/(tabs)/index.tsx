@@ -6,6 +6,7 @@ import ChildCard from '@/components/ChildCard';
 import {  ChildDataTypes, RootState } from '@/constants/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeChild } from '@/store/slices/childrenSlice';
+import { useEffect } from 'react';
 
 export default function TabOneScreen() {
 
@@ -13,6 +14,7 @@ export default function TabOneScreen() {
   const router = useRouter();
   const childrenList = useSelector((state: RootState) => state.children.children);
   const dispatch = useDispatch();
+
 
 
   const handleDelete = (id: number) => {
