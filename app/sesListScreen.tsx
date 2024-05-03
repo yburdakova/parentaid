@@ -1,16 +1,19 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/constants/types';
 import Colors from '@/constants/Colors';
 import SessionCard from '@/components/SessionCard';
 import CustomButton from '@/components/CustomButton';
+import { removeSession } from '@/store/slices/childrenSlice';
 
 export default function sessionScreen() {
   const child = useSelector((state: RootState) => state.children.actualChild);
+  const dispatch = useDispatch();
 
-  const handleDelete = (id: number) => {
-    
+  const handleDelete = (sessionId: number) => {
+    child && dispatch(removeSession({ childId: child.id, sessionId }));
+    console.log(child?.sessions)
   };
 
   const handleEdit = () => {

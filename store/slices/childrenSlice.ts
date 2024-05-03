@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ChildDataTypes, ChildrenState } from '@/constants/types';
+import { ChildDataTypes, ChildrenState, SessionDataTypes } from '@/constants/types';
 import { children } from '@/constants/database';
 
 
@@ -8,6 +8,7 @@ const initialState: ChildrenState = {
   children: children,
   change: false,
   actualChild: null,
+  actualSession: null
 };
 
 const childrenSlice = createSlice({
@@ -32,6 +33,19 @@ const childrenSlice = createSlice({
     setActualChild: (state, action: PayloadAction<ChildDataTypes | null>) => {
       state.actualChild = action.payload
     },
+    setActualSession: (state, action: PayloadAction<SessionDataTypes | null>) => {
+      state.actualSession = action.payload
+    },
+    removeSession: (state, action: PayloadAction<{ childId: number, sessionId: number }>) => {
+      const { childId, sessionId } = action.payload;
+      state.children = state.children.map(child => {
+        if (child.id === childId) {
+          child.sessions = child.sessions.filter(session => session.id !== sessionId);
+        }
+        return child;
+      });
+      console.log(state.children)
+    }
 }});
 
 export const {
@@ -39,6 +53,8 @@ export const {
   removeChild,
   updateChild,
   setChange,
-  setActualChild
+  setActualChild,
+  setActualSession,
+  removeSession
 } = childrenSlice.actions;
 export default childrenSlice.reducer;

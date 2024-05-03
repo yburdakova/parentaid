@@ -1,21 +1,24 @@
 import { ImageSourcePropType } from "react-native";
 
-interface MessageTypes {
+export interface Response {
+    transcript: string;
+    response: string;
+}
+export interface MessageTypes {
   id: number;
   time: string;
-  message: string;
-  server: boolean;
+  message: Response;
 }
 
-export interface SessionTypes {
+export interface SessionDataTypes {
   id: number;
   title: string;
-  data:string;
+  date: string;
   messages: MessageTypes[];
 }
 
 export interface SessionCardProps {
-  data: SessionTypes;
+  data: SessionDataTypes;
   onDelete: () => void;
   onEdit: () => void;
 }
@@ -26,8 +29,8 @@ export interface ChildDataTypes {
   dateBirth: string;
   sex: 'girl' | 'boy';
   avatar: string;
-  addInfo?: string;
-  sessions?: SessionTypes[]
+  addInfo: string;
+  sessions: SessionDataTypes[]
 }
 
 export interface ChildCardProps {
@@ -46,6 +49,7 @@ export interface ChildrenState {
   children: ChildDataTypes[];
   change: boolean;
   actualChild: ChildDataTypes | null;
+  actualSession: SessionDataTypes | null;
 }
 
 export interface RootState {

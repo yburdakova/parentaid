@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import { getAge } from '@/middleware/formatedDate';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'expo-router';
+import { setActualSession } from '@/store/slices/childrenSlice';
 
 export default function SessionCard({ data, onDelete, onEdit }: SessionCardProps) {
 
@@ -15,20 +16,15 @@ export default function SessionCard({ data, onDelete, onEdit }: SessionCardProps
 
   const [age, setAge] = useState<AgeType>({years: 0, months: 0, days: 0})
 
-  // useEffect(() => {
-  //   const dataBirth = getAge(data.dateBirth);
-  //   setAge(dataBirth);
-  // }, [data.time]);
-
   const toSessionScreen = () => {
-    // dispatch(setActualChild(data))
+    dispatch(setActualSession(data))
     router.push('/sessionScreen');
   }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.infoBox} onPress={toSessionScreen}>
-        <Text style={styles.subtitle}>{data.data}</Text>
+        <Text style={styles.subtitle}>{data.date}</Text>
         <Text style={styles.title}>{data.title}</Text>
         <Text style={styles.subtitle}>{data.messages.length} messages</Text>
       </TouchableOpacity>

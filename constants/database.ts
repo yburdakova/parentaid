@@ -13,26 +13,38 @@ export const children: ChildDataTypes[] = [
       {
         id:1,
         title: "Title Of Dialog One Line 01",
-        data: "2007-05-16T00:00:00.000Z",
+        date: "2007-05-16T00:00:00.000Z",
         messages: [
           {
-            id:1,
+            id: 11,
             time: "2007-05-16T00:00:00.000Z",
-            message: "Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
-            server: true
+            message: {
+              transcript: "User said Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
+              response: "Chat GPT answer: Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors."
+            }
           }
         ]
       },
       {
         id:2,
         title: "Title Of Dialog One Line 02",
-        data: "2007-05-16T00:00:00.000Z",
+        date: "2007-05-16T00:00:00.000Z",
         messages: [
           {
-            id: 1,
+            id: 21,
             time: "2007-05-16T00:00:00.000Z",
-            message: "Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
-            server: true
+            message: {
+              transcript: "User said Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
+              response: "Chat GPT answer: Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors."
+            }
+          },
+          {
+            id: 22,
+            time: "2007-05-16T00:10:00.000Z",
+            message: {
+              transcript: "User said Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.",
+              response: "Chat GPT answer: Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors.Enumerate the important aspects to consider in raising your child, such as values, religious or national peculiarities, talents, developmental characteristics, health, or other significant factors."
+            }
           }
         ]
       },

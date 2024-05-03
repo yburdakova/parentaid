@@ -45,7 +45,8 @@ export default function addChildScreen() {
       dateBirth: date.toISOString(),
       sex: sex as 'girl' | 'boy',
       avatar,
-      addInfo
+      addInfo,
+      sessions: []
     };
     dispatch(addChild(newChild));
     dispatch(setChange(false));
@@ -60,7 +61,7 @@ export default function addChildScreen() {
       dateBirth: date.toISOString(),
       sex: sex as 'girl' | 'boy',
       avatar,
-      addInfo
+      addInfo,
     };
     dispatch(updateChild(updatedChild));
     dispatch(setChange(false));
