@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, View } from './Themed';
 import { AgeType, SessionCardProps } from '@/constants/types';
 import Colors from '@/constants/Colors';
@@ -13,6 +13,7 @@ export default function SessionCard({ data, onDelete, onEdit }: SessionCardProps
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const colorScheme = useColorScheme();
 
   const [age, setAge] = useState<AgeType>({years: 0, months: 0, days: 0})
 
@@ -25,7 +26,7 @@ export default function SessionCard({ data, onDelete, onEdit }: SessionCardProps
     <View style={styles.container}>
       <TouchableOpacity style={styles.infoBox} onPress={toSessionScreen}>
         <Text style={styles.subtitle}>{data.date}</Text>
-        <Text style={styles.title}>{data.title}</Text>
+        <Text style={[styles.title, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}>{data.title}</Text>
         <Text style={styles.subtitle}>{data.messages.length} messages</Text>
       </TouchableOpacity>
       <View style={styles.icons}>

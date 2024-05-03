@@ -56,16 +56,19 @@ export default function addChildScreen() {
 
   const changeChildData = () => {
     const updatedChild = {
-      id: id,
+      ...child,
+      id: id || 0,
       name,
       dateBirth: date.toISOString(),
       sex: sex as 'girl' | 'boy',
       avatar,
       addInfo,
+      sessions: child?.sessions || []
     };
+
     dispatch(updateChild(updatedChild));
     dispatch(setChange(false));
-    dispatch(setActualChild(null))
+    dispatch(setActualChild(null));
     router.push('/(tabs)');
   }
 

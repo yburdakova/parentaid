@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, TouchableOpacity, useColorScheme } from 'react-native';
 import { Text, View } from './Themed';
 import { AgeType, ChildCardProps } from '@/constants/types';
 import Colors from '@/constants/Colors';
@@ -13,6 +13,7 @@ export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const colorScheme = useColorScheme();
 
   const [age, setAge] = useState<AgeType>({years: 0, months: 0, days: 0})
 
@@ -31,8 +32,8 @@ export default function ChildCard({ data, onDelete, onEdit }: ChildCardProps) {
       <TouchableOpacity style={styles.infoBox} onPress={toSessionScreen}>
       {data.avatar && <Image source={{ uri: data.avatar }} style={styles.avatar} />}
         <View style={styles.infoContainer}>
-        <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.age}>{age.years} y {age.months} m {age.days} d</Text>
+        <Text style={[styles.name, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}>{data.name}</Text>
+          <Text style={[styles.age, { color: colorScheme === 'dark' ? '#fff' : '#000' }]}>{age.years} y {age.months} m {age.days} d</Text>
           <Text style={styles.sessions}>{data.sessions?.length} sessions</Text>
         </View>
       </TouchableOpacity>
